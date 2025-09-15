@@ -20,7 +20,10 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
   }, 400);
 
   try {
-    const response = await fetch(`/api/convert?id=${videoId}`);
+    // 🔑 Pakai domain Railway langsung
+    const response = await fetch(
+      `https://converter-ytb-production.up.railway.app/api/convert?id=${videoId}&format=mp3`
+    );
     const data = await response.json();
 
     clearInterval(interval);
