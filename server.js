@@ -2,36 +2,37 @@ import express from "express";
 import fetch from "node-fetch";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static(".")); // biar index.html & index.js bisa diakses
+// API Key dari environment variable
+const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 
-app.get("/api/convert", async (req, res) => {
-  const videoId = req.query.id;
-  if (!videoId) {
-    return res.status(400).json({ error: "Video ID diperlukan" });
-  }
+app.use(express.static("public")); // kalau file index.html, style.css, index.js ada di folder public
+
+app.get("/convert", async (req, res) => {
+  const { id, format } = req.query; // contoh: /convert?id=aJOTlE1K90k&format=mp3
 
   try {
-    const apiRes = await fetch(
-      `https://youtube-mp36.p.rapidapi.com/dl?id=${videoId}`,
+    const response = await fetch(
+      `https://youtube-mp3-converter.p.rapidapi.com/service/run?lang=en&id=${id}&action=button&widget=rapidapi&format=${format}`,
       {
         method: "GET",
         headers: {
-          "x-rapidapi-host": "youtube-mp36.p.rapidapi.com",
-          "x-rapidapi-key": "f96b9e6ba0mshdda6ccf6b9794e0p1f90e5jsn6ef74c7af6b1"
-        }
+          "x-rapidapi-host": "youtube-mp3-converter.p.rapidapi.com",
+          "x-rapidapi-key": RAPIDAPI_KEY,
+        },
       }
     );
 
-    const data = await apiRes.json();
+    const data = await response.json();
     res.json(data);
+
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Gagal menghubungi API RapidAPI" });
+    res.status(500).json({ error: "Terjadi error saat convert" });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
