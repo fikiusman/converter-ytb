@@ -4,14 +4,14 @@ import fetch from "node-fetch";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ API Key dari Railway Variables
+// API Key dari Railway Variables
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 
 app.use(express.static("public"));
 
 // Endpoint convert
 app.get("/convert", async (req, res) => {
-  const { id, format } = req.query; // contoh: ?id=VIDEO_ID&format=mp3
+  const { id } = req.query; // ?id=VIDEO_ID
 
   if (!id) {
     return res.status(400).json({ error: "ID video tidak ditemukan" });
@@ -19,18 +19,22 @@ app.get("/convert", async (req, res) => {
 
   try {
     const response = await fetch(
-      `youtube-mp36.p.rapidapi.com/service/run?lang=en&id=${id}&action=button&widget=rapidapi&format=${format || "mp3"}`,
+      `https://youtube-mp36.p.rapidapi.com/dl?id=${id}`,
       {
         method: "GET",
         headers: {
-          "x-rapidapi-host": "youtube-mp36.p.rapidapi.com",
-          "x-rapidapi-key": RAPIDAPI_KEY,
+          "X-RapidAPI-Key": RAPIDAPI_KEY,
+          "X-RapidAPI-Host": "youtube-mp36.p.rapidapi.com",
         },
       }
     );
 
     const data = await response.json();
-    console.log("Response dari RapidAPI:", data); // debug
+    console.log("Response dari RapidAPI:", data);
+
+    if (!data || data.status !== "ok") {
+      return res.status(400).json({ error: "Gagal convert", detail: data });
+    }
 
     res.json(data);
   } catch (err) {
@@ -42,4 +46,3 @@ app.get("/convert", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
