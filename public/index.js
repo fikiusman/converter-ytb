@@ -7,7 +7,7 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
     return;
   }
 
-  // Tampilkan progress bar
+  // Progress bar tampil
   document.getElementById("progressContainer").classList.remove("hidden");
   updateProgress(0);
 
@@ -20,27 +20,29 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
   }, 400);
 
   try {
-    const response = await fetch(`/api/convert?id=${videoId}`);
+    // ✅ route disamakan dengan server.js
+    const response = await fetch(`/convert?id=${videoId}&format=mp3`);
     const data = await response.json();
 
     clearInterval(interval);
+    console.log("Response dari server:", data); // debug
 
-    if (data.status === "ok") {
+    if (data.status === "ok" || data.link) {
       updateProgress(100);
 
       setTimeout(() => {
-        document.getElementById("songTitle").textContent = data.title;
+        document.getElementById("songTitle").textContent = data.title || "Hasil Convert";
         document.getElementById("downloadLink").href = data.link;
         document.getElementById("result").classList.remove("hidden");
         document.getElementById("progressContainer").classList.add("hidden");
       }, 800);
     } else {
-      alert("Gagal convert! Coba lagi.");
+      alert("Gagal convert! Respon tidak valid.");
       document.getElementById("progressContainer").classList.add("hidden");
     }
   } catch (err) {
     clearInterval(interval);
-    console.error(err);
+    console.error("Error fetch:", err);
     alert("Terjadi error saat fetch.");
     document.getElementById("progressContainer").classList.add("hidden");
   }
