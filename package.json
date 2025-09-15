@@ -1,14 +1,14 @@
 {
-  "name": "converter-ytb",
+  "name": "ytb-converter",
   "version": "1.0.0",
+  "description": "YouTube to MP3 Converter pakai Express + RapidAPI",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^3.3.2"
   }
 }
