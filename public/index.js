@@ -1,6 +1,3 @@
-// URL backend Railway kamu
-const BACKEND_URL = "https://melfimp3-converter-youtube-to-mp3-production.up.railway.app";
-
 document.getElementById("convertBtn").addEventListener("click", async () => {
   const url = document.getElementById("youtubeUrl").value.trim();
   const videoId = extractVideoId(url);
@@ -10,7 +7,7 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
     return;
   }
 
-  // Progress bar tampil
+  // Tampilkan progress bar
   document.getElementById("progressContainer").classList.remove("hidden");
   updateProgress(0);
 
@@ -23,8 +20,8 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
   }, 400);
 
   try {
-    // ✅ fetch ke backend Railway
-    const response = await fetch(`${BACKEND_URL}/convert?id=${videoId}`);
+    // 🔑 Panggil Railway backend
+    const response = await fetch(`melfimp3-converter-youtube-to-mp3-production.up.railway.app/convert?id=${videoId}`);
     const data = await response.json();
 
     clearInterval(interval);
@@ -46,7 +43,7 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
   } catch (err) {
     clearInterval(interval);
     console.error("Error fetch:", err);
-    alert("Terjadi error saat fetch API backend.");
+    alert("Terjadi error saat fetch.");
     document.getElementById("progressContainer").classList.add("hidden");
   }
 });
