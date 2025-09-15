@@ -21,7 +21,7 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
 
   try {
     // 🔑 Panggil Railway backend
-    const response = await fetch(`melfimp3-converter-youtube-to-mp3-production.up.railway.app/convert?id=${videoId}`);
+    const response = await fetch(`https://melfimp3-converter-youtube-to-mp3-production.up.railway.app/convert?id=${videoId}`);
     const data = await response.json();
 
     clearInterval(interval);
