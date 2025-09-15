@@ -19,11 +19,11 @@ app.get("/convert", async (req, res) => {
 
   try {
     const response = await fetch(
-      `https://youtube-mp3-converter.p.rapidapi.com/service/run?lang=en&id=${id}&action=button&widget=rapidapi&format=${format || "mp3"}`,
+      `youtube-mp36.p.rapidapi.com/service/run?lang=en&id=${id}&action=button&widget=rapidapi&format=${format || "mp3"}`,
       {
         method: "GET",
         headers: {
-          "x-rapidapi-host": "youtube-mp3-converter.p.rapidapi.com",
+          "x-rapidapi-host": "youtube-mp36.p.rapidapi.com",
           "x-rapidapi-key": RAPIDAPI_KEY,
         },
       }
@@ -42,3 +42,4 @@ app.get("/convert", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
