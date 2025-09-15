@@ -20,14 +20,14 @@ document.getElementById("convertBtn").addEventListener("click", async () => {
   }, 400);
 
   try {
-    // ✅ route disamakan dengan server.js
-    const response = await fetch(`/convert?id=${videoId}&format=mp3`);
+    // ✅ panggil backend kamu
+    const response = await fetch(`/convert?id=${videoId}`);
     const data = await response.json();
 
     clearInterval(interval);
-    console.log("Response dari server:", data); // debug
+    console.log("Response dari server:", data);
 
-    if (data.status === "ok" || data.link) {
+    if (data.status === "ok" && data.link) {
       updateProgress(100);
 
       setTimeout(() => {
