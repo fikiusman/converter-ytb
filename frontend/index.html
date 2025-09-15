@@ -49,23 +49,16 @@
   <!-- Container -->
   <div class="container">
     <p style="text-align:center; color:#ff0;">🎵 Selamat datang di Converter 🎵</p>
-    <input type="text" id="youtubeUrl" placeholder="🎬 Masukkan URL YouTube di sini...">
+    
+    <!-- ✅ ID sudah disamakan -->
+    <input type="text" id="inputUrl" placeholder="🎬 Masukkan URL YouTube di sini...">
     <button id="convertBtn">🚀 Convert</button>
 
-    <!-- Progress Bar -->
-    <div id="progressContainer" class="hidden">
-      <p>Processing...</p>
-      <div class="progress-bar">
-        <div id="progressFill"></div>
-      </div>
-      <p id="progressText">0%</p>
-    </div>
+    <!-- ✅ Tempat status -->
+    <p id="statusText"></p>
 
-    <!-- Hasil -->
-    <div id="result" class="hidden">
-      <p id="songTitle"></p>
-      <a id="downloadLink" href="#" target="_blank">⬇️ Download MP3</a>
-    </div>
+    <!-- ✅ Tempat hasil -->
+    <div id="resultWrap"></div>
   </div>
 
   <!-- Footer -->
