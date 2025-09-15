@@ -4,17 +4,17 @@ import fetch from "node-fetch";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// API Key dari Railway → Variables
+// ✅ API Key dari Railway Variables
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 
-app.use(express.static("public")); // folder "public" berisi index.html, style.css, index.js
+app.use(express.static("public"));
 
-// 🔑 Endpoint API
-app.get("/api/convert", async (req, res) => {
-  const { id, format } = req.query; // contoh: /api/convert?id=aJOTlE1K90k&format=mp3
+// Endpoint convert
+app.get("/convert", async (req, res) => {
+  const { id, format } = req.query; // contoh: ?id=VIDEO_ID&format=mp3
 
   if (!id) {
-    return res.status(400).json({ error: "Video ID tidak ditemukan" });
+    return res.status(400).json({ error: "ID video tidak ditemukan" });
   }
 
   try {
@@ -30,14 +30,15 @@ app.get("/api/convert", async (req, res) => {
     );
 
     const data = await response.json();
-    res.json(data);
+    console.log("Response dari RapidAPI:", data); // debug
 
+    res.json(data);
   } catch (err) {
-    console.error(err);
+    console.error("Error di server:", err);
     res.status(500).json({ error: "Terjadi error saat convert" });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
