@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://melfimp3-converter-youtube-to-mp3-production.up.railway.app/sitemap.xml
